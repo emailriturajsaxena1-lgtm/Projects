@@ -8,6 +8,8 @@ import 'features/auth/authentication_screen.dart';
 import 'features/dashboard/smart_dashboard_screen.dart';
 import 'features/security/supervisor_dashboard_screen.dart';
 import 'features/security/guard_gate_dashboard_screen.dart';
+import 'features/resident/smart_dashboard_screen.dart';
+import 'features/visitor/visitor_management_screen.dart';
 
 final logger = Logger();
 
@@ -32,24 +34,36 @@ void main() async {
     logger.w('⚠️ Supabase connection failed!');
   }
 
-  runApp(const MyGateERP());
+  runApp(const MyApp());
 }
 
-class MyGateERP extends StatelessWidget {
-  const MyGateERP({super.key});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
-  Widget build(BuildContext context) => MaterialApp(
-        theme: ThemeData(
-          useMaterial3: true,
-          colorSchemeSeed: Colors.orange,
-          appBarTheme: const AppBarTheme(
-            backgroundColor: Colors.orange,
-            foregroundColor: Colors.white,
-          ),
-        ),
-        home: const AuthGate(),
-        debugShowCheckedModeBanner: false,
-      );
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Gatelly',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  const HomeScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // Example logic to determine user type
+    final bool isResident = true; // Replace with actual logic
+
+    return isResident
+        ? const SmartDashboardScreen(userProfile: UserProfile(...))
+        : const VisitorManagementScreen(userProfile: UserProfile(...));
+  }
 }
 
 // 2. ROLE-BASED NAVIGATION - StreamBuilder for reactive auth
