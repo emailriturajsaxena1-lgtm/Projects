@@ -1,0 +1,14 @@
+name: gately_core
+description: Shared core package for Gately - Society Resident and Visitor Management apps.
+version: 1.0.0
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  supabase_flutter: ^2.12.0
+  riverpod: ^2.0.0
+  logger: ^2.0.0
