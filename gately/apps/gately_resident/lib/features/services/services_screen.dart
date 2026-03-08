@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gately_core/gately_core.dart';
 import 'package:intl/intl.dart';
 import '../community/helpdesk_screen.dart';
-import '../dashboard/community_pulse_screen.dart';
+import '../community/community_pulse_screen.dart';
 
 class ServicesScreen extends StatefulWidget {
   final UserProfile userProfile;
@@ -163,7 +163,7 @@ class _ServicesScreenState extends State<ServicesScreen> {
                         try {
                           final name = _amenities.firstWhere(
                             (a) => a['id'] == amenityId,
-                            orElse: () => {'name': amenityId},
+                            orElse: () => {'name': amenityId ?? ''},
                           )['name'] as String;
                           await _supabaseService.createAmenityBooking(
                             societyId: widget.userProfile.societyId,

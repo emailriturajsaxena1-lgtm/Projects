@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:mygate_clone/core/models/user_profile.dart';
+import 'package:mygate_clone/core/services/supabase_service.dart';
+
 class VisitorManagementScreen extends StatefulWidget {
   final UserProfile userProfile;
 
@@ -79,6 +83,23 @@ class _VisitorManagementScreenState extends State<VisitorManagementScreen>
         SnackBar(content: Text('Error: $e')),
       );
     }
+  }
+
+  void _showNewVisitorDialog() {
+    // TODO: Implement the dialog functionality
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('New Visitor'),
+        content: Text('Dialog content goes here.'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: Text('Close'),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -495,3 +516,39 @@ class _VisitorManagementScreenState extends State<VisitorManagementScreen>
             const SizedBox(height: 8),
             Text(
               value,
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 4),
+            Text(
+              title,
+              style: TextStyle(fontSize: 16, color: Colors.grey),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMetricRow(String label, String value, Color color) {
+    return Row(
+      children: [
+        Expanded(
+          child: Text(
+            value,
+            style: TextStyle(fontSize: 16, color: color),
+          ),
+        ),
+        const SizedBox(width: 12),
+        Text(
+          label,
+          style: TextStyle(fontSize: 12, color: Colors.grey),
+        ),
+      ],
+    );
+  }
+
+  String _formatDateTime(dynamic dateTime) {
+    if (dateTime == null) return '';
+    return dateTime.toString();
+  }
+}

@@ -602,17 +602,18 @@ class SupabaseService {
   Future<List<CommunityClassified>> getClassifieds(String societyId,
       {String? category}) async {
     try {
-      var query = _client
+      var filterQuery = _client
           .from('community_classifieds')
           .select()
           .eq('society_id', societyId)
-          .eq('status', 'active')
-          .order('created_at', ascending: false)
-          .limit(50);
+          .eq('status', 'active');
+
       if (category != null && category != 'all') {
-        query = query.eq('category', category);
+        filterQuery = filterQuery.eq('category', category);
       }
-      final response = await query;
+
+      final response =
+          await filterQuery.order('created_at', ascending: false).limit(50);
       logger.i('Classifieds fetched: ${response.length}');
       return [for (final e in response) CommunityClassified.fromJson(e)];
     } catch (e) {

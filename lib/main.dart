@@ -5,10 +5,10 @@ import 'package:logger/logger.dart';
 import 'core/services/supabase_service.dart';
 import 'core/models/user_profile.dart';
 import 'features/auth/authentication_screen.dart';
-import 'features/dashboard/smart_dashboard_screen.dart';
+//import 'features/resident/smart_dashboard_screen.dart';
 import 'features/security/supervisor_dashboard_screen.dart';
 import 'features/security/guard_gate_dashboard_screen.dart';
-import 'features/resident/smart_dashboard_screen.dart';
+import 'features/resident/smart_dashboard_screen.dart' as resident;
 import 'features/visitor/visitor_management_screen.dart';
 
 final logger = Logger();
@@ -61,8 +61,20 @@ class HomeScreen extends StatelessWidget {
     final bool isResident = true; // Replace with actual logic
 
     return isResident
-        ? const SmartDashboardScreen(userProfile: UserProfile(...))
-        : const VisitorManagementScreen(userProfile: UserProfile(...));
+        ? resident.SmartDashboardScreen(
+            userProfile: UserProfile(
+            id: '1',
+            societyId: 'society_1',
+            role: UserRole.resident,
+            fullName: 'John Doe',
+          ))
+        : VisitorManagementScreen(
+            userProfile: UserProfile(
+            id: '2',
+            societyId: 'society_2',
+            role: UserRole.guard,
+            fullName: 'Jane Smith',
+          ));
   }
 }
 
@@ -172,7 +184,7 @@ class AuthGate extends StatelessWidget {
             } else if (profile.role == UserRole.guard) {
               return GuardGateDashboardScreen(userProfile: profile);
             } else {
-              return SmartDashboardScreen(userProfile: profile);
+              return resident.SmartDashboardScreen(userProfile: profile);
             }
           },
         );
